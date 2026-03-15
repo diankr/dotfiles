@@ -602,6 +602,22 @@
                             "to": [{ "key_code": "left_control" }]
                         },
                         {
+                            "from": { "key_code": "delete_forward" },
+                            "to": [{ "key_code": "1" }]
+                        },
+                        {
+                            "from": { "key_code": "end" },
+                            "to": [{ "key_code": "2" }]
+                        },
+                        {
+                            "from": { "key_code": "home" },
+                            "to": [{ "key_code": "5" }]
+                        },
+                        {
+                            "from": { "key_code": "insert" },
+                            "to": [{ "key_code": "4" }]
+                        },
+                        {
                             "from": { "key_code": "left_command" },
                             "to": [{ "key_code": "left_option" }]
                         },
@@ -611,7 +627,15 @@
                         },
                         {
                             "from": { "key_code": "left_option" },
-                            "to": [{ "key_code": "delete_or_backspace" }]
+                            "to": [{ "key_code": "left_control" }]
+                        },
+                        {
+                            "from": { "key_code": "page_down" },
+                            "to": [{ "key_code": "3" }]
+                        },
+                        {
+                            "from": { "key_code": "page_up" },
+                            "to": [{ "key_code": "6" }]
                         },
                         {
                             "from": { "key_code": "right_command" },
@@ -619,10 +643,6 @@
                         },
                         {
                             "from": { "key_code": "right_shift" },
-                            "to": [{ "key_code": "semicolon" }]
-                        },
-                        {
-                            "from": { "key_code": "semicolon" },
                             "to": [{ "key_code": "hyphen" }]
                         }
                     ]
