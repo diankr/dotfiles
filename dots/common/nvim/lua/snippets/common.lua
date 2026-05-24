@@ -15,9 +15,10 @@ i_map( 2, ",", "<Esc>A,<Esc>" )
 
 
 i_map( 0, "\"", "\"\"<Esc>i" )
-i_map( 0, "(", "()<Esc>i" )
-i_map( 0, "[", "[]<Esc>i" )
-i_map( 0, "{", "{}<Esc>i" )
+
+i_map( 1, "(", "()<Esc>i" )
+i_map( 1, "[", "[]<Esc>i" )
+i_map( 1, "{", "{}<Esc>i" )
 
 i_map( 2, "\"", "\"\", <++><Esc>6hi" )
 i_map( 2, "(", "(),<Esc>hi" )

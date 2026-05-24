@@ -22,7 +22,7 @@ marker_selected = { fg = "#dbbc7f", bg = "#dbbc7f" }
 # Tab
 tab_active   = { reversed = true }
 tab_inactive = {}
-tab_width    = 1
+# tab_width    = 1
 
 # Count
 count_copied   = { fg = "#343f44", bg = "#a7c080" }
@@ -42,8 +42,8 @@ syntect_theme = ""
 # : Status {{{
 
 [status]
-separator_open  = ""
-separator_close = ""
+# separator_open  = ""
+# separator_close = ""
 separator_style = { fg = "#343f44", bg = "#343f44" }
 
 # Mode
@@ -172,8 +172,11 @@ rules = [
 	{ mime = "application/{pdf,doc,rtf,vnd.*}", fg = "#7fbbb3" },
 
 	# Fallback
-	{ name = "*", fg = "#83c092" },
-	{ name = "*/", fg = "#a7c080" }
+	{ url = "*", fg = "#83c092" },
+	{ url = "*/", fg = "#a7c080" },
+	
+	# Directory
+	{ mime = "inode/directoriy", fg = "#a7c080"}
 ]
 
 # : }}}

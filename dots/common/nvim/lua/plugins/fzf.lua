@@ -74,42 +74,42 @@ return {
 
 		-- 文件与 Buffer 分别按你旧配置做了细节对齐
 		files = {
-		  prompt	   = "Files❯ ",
-		  multiprocess = true,
-		  git_icons	= true,
-		  file_icons   = true,
-		  color_icons  = true,
-		  -- 隐藏文件 + 忽略 .git
-		  fd_opts	  = "--color=never --type f --hidden --follow --exclude .git",
-		  rg_opts	  = "--color=never --files --hidden --follow -g '!.git'",
+			prompt       = "Files❯ ",
+			multiprocess = true,
+			git_icons    = true,
+			file_icons   = true,
+			color_icons  = true,
+			-- 隐藏文件 + 忽略 .git
+			fd_opts      = "--color=never --type f --hidden --follow --exclude .git",
+			rg_opts      = "--color=never --files --hidden --follow -g '!.git'",
 		},
 		buffers = {
-		  prompt	   = "Buffers❯ ",
-		  file_icons   = true,
-		  color_icons  = true,
-		  sort_lastused = true,
-		  -- 这里给你做了「Ctrl-D 删除 buffer + 继续选择」的动作组合，
-		  -- 等价你原来自定义的 :BD 工作流
-		  actions = {
-			["default"] = actions.buf_edit,
-			["ctrl-d"]  = { actions.buf_del, actions.resume },
-		  },
+			prompt   = "Buffers❯ ",
+			file_icons   = true,
+			color_icons  = true,
+			sort_lastused = true,
+			-- 这里给你做了「Ctrl-D 删除 buffer + 继续选择」的动作组合，
+			-- 等价你原来自定义的 :BD 工作流
+			actions = {
+				["default"] = actions.buf_edit,
+				["ctrl-d"]  = { actions.buf_del, actions.resume },
+			},
 		},
 
 		-- 预览器示例（可按需精简）
 		previewers = {
-		  bat = {
+			bat = {
 			cmd   = "bat",
 			args  = "--style=numbers,changes --color always",
 			theme = "Coldark-Dark",
-		  },
-		  builtin = {
+			},
+			builtin = {
 			syntax		 = true,
 			syntax_limit_l = 0,
 			syntax_limit_b = 1024 * 1024,
-		  },
+			},
 		},
-	  }
+	}
 	end,
 
 	config = function(_, opts)
