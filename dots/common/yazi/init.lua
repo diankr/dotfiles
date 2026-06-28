@@ -18,6 +18,10 @@ require("bunny"):setup({
 		{ key = { "d", "c" }, path = "~/Documents",                           desc = "Documents"    },
 		{ key = { "d", "l" }, path = "~/Downloads",                           desc = "Downloads"    },
 		{ key = { "g", "c" }, path = "~/Google Drive/我的云端硬盘",           desc = "Cloud Drive" },
+		{ key = { "i", "i" }, path = "~/Godot/iruka",                         desc = "iruka" },
+		{ key = { "i", "a" }, path = "~/Godot/iruka/assets",                  desc = "iruka_assets" },
+		{ key = { "i", "s" }, path = "~/Godot/iruka/scripts",                 desc = "iruka_scripts" },
+		{ key = { "i", "r" }, path = "~/Godot/iruka/src",                     desc = "iruka_resources" },
   },
   desc_strategy = "path", -- If desc isn't present, use "path" or "filename", default is "path"
   ephemeral = true, -- Enable ephemeral hops, default is true

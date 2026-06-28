@@ -47,23 +47,27 @@ sep_outer = { open = " ", close = " " }
 [icon]
 prepend_conds = [
 	{ if = "dir & hovered", text = "", fg = "#a7c080"},
+	{ if = "dir & hidden", text = "", fg = "#a7c080"},
 	{ if = "dir", text = "󰉋", fg = "#a7c080"}
 ]
 
 prepend_dirs = [
+	# default
 	{ name = "Applications", text = "", fg = "#a7c080" },
-	{ name = "CodeWork", text = "", fg = "#a7c080" },
 	{ name = "Desktop", text = "", fg = "#a7c080" },
 	{ name = "Documents", text = "󰂺", fg = "#a7c080" },
-	{ name = "dotfiles", text = "", fg = "#a7c080" },
 	{ name = "Downloads", text = "󰇚", fg = "#a7c080" },
-	{ name = "Godot", text = "", fg = "#a7c080" },
 	{ name = "Google Drive", text = "", fg = "#a7c080" },
 	{ name = "Library", text = "", fg = "#a7c080" },
 	{ name = "Movies", text = "󰟞", fg = "#a7c080" },
 	{ name = "Music", text = "", fg = "#a7c080" },
-	{ name = "Notes", text = "", fg = "#a7c080" },
 	{ name = "Pictures", text = "", fg = "#a7c080" },
 	{ name = "Public", text = "", fg = "#a7c080" },
+	# custom home
+	{ name = "CodeWork", text = "", fg = "#a7c080" },
+	{ name = "dotfiles", text = "", fg = "#a7c080" },
+	{ name = "Godot", text = "", fg = "#a7c080" },
+	{ name = "Notes", text = "", fg = "#a7c080" },
 	{ name = "Repos", text = "", fg = "#a7c080" },
+	# custom others
 ]
