@@ -13,18 +13,19 @@ mpv_audio = [
 
 [open]
 prepend_rules = [
-	{ url = "*.csv", use = "vd_tab_profile" },
-	{ url = "*.xlsx", use = "vd_tab_profile" },
+	{ url  = "*.csv",   use = "vd_tab_profile" },
+	{ url  = "*.xlsx",  use = "vd_tab_profile" },
 	{ mime = "audio/*", use = "mpv_audio" },
 # edit with Nvim
-	{ url = "*.rs", use = "text" },
-	{ url = "*.toml", use = "text" },
-	{ url = "*.json", use = "text" },
-	{ url = "*.md", use = "text" },
-	{ url = "*.lua", use = "text" },
-	{ url = "*.css", use = "text" },
-	{ url = "*.js", use = "text" },
-	{ mime = "text/*", use = "text" }
+	{ url  = "*.css",   use = "text" },
+	{ url  = "*.gd",    use = "text" },
+	{ url  = "*.js",    use = "text" },
+	{ url  = "*.json",  use = "text" },
+	{ url  = "*.lua",   use = "text" },
+	{ url  = "*.md",    use = "text" },
+	{ url  = "*.rs",    use = "text" },
+	{ url  = "*.toml",  use = "text" },
+	{ mime = "text/*",  use = "text" }
 ]
 
 [mgr]

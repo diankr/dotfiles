@@ -13,7 +13,7 @@ return {
 		"gdscript", "godot_resource", "gdshader",
 	  },
 	  highlight = {
-		enable = true,
+			enable = true,
 		-- additional_vim_regex_highlighting = false, -- 避免双重上色
 	  },
 	  indent = { enable = true },
@@ -27,14 +27,14 @@ return {
 		},
 	  },
 	},
-		config = function(_, opts)
-			require("nvim-treesitter.configs").setup(opts)
-			vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile", "BufWinEnter"}, {
-				callback = function ()
-					vim.cmd("TSBufEnable highlitht")
-				end
-			})
-		end
+	-- config = function(_, opts)
+		-- require("nvim-treesitter").setup(opts)
+		-- vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile", "BufWinEnter"}, {
+			-- callback = function ()
+				-- vim.cmd("TSBufEnable highlight")
+			-- end
+		-- })
+	-- end
   },
 	-- {
 	-- 	"nvim-treesitter/playground",
