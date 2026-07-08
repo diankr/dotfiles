@@ -1,0 +1,35 @@
+{
+	"function": {
+		"prefix": ["fn"],
+		"body": [
+			"func ${1:fn_name}(${2:}) -> ${3:void}:",
+			"  ${4:pass}",
+			"$0"
+		],
+		"description": "function"
+	},
+	"export": {
+		"prefix": ["xp"],
+		"body": [
+			"@export var ${1:name}:${2:Type} = ${3:var_or_path}",
+			"$0"
+		],
+		"description": "export var to editor"
+	},
+	"onready": {
+		"prefix": ["onr"],
+		"body": [
+			"@onready var ${1:nameType} = ${2:pathOrObj}",
+			"$0"
+		],
+		"description": "set var or obj to onready"
+	},
+	"panic": {
+		"prefix": ["pan"],
+		"body": [
+			"dbg.panic(RESULT.Err.${1:})",
+			"$0"
+		],
+		"description": "panic and send err message"
+	}
+}

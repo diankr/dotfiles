@@ -19,5 +19,8 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Markdown Snippets
+require("snippets.gdscript")
+
 -- run current godot scene
 require("ft_impl.gdscript.debug_run")
