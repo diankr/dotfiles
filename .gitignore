@@ -1,2 +1,4 @@
 dots/common/nvim/plugged
 dots/common/nvim/tmp
+
+.DS_Store

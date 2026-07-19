@@ -24,6 +24,13 @@
 		],
 		"description": "set var or obj to onready"
 	},
+	"ignore_untyped": {
+		"prefix": ["ign_un"],
+		"body": [
+			"@warning_ignore(\"untyped_declaration\")"
+		],
+		"description": "Ignore untyped declaration"
+	},
 	"panic": {
 		"prefix": ["pan"],
 		"body": [
