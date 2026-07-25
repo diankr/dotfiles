@@ -10,11 +10,6 @@ map("n", "B",  "5b",  ns)
 map("n", "<C-U>", "5<C-y>", ns)
 map("n", "<C-E>", "5<C-e>", ns)
 
--- clever-f
--- local plug = { silent = true, remap = true }
--- map({ "n","x","o" }, "-", "<Plug>(clever-f-repeat-forward)", plug)
--- map({ "n","x","o" }, "+", "<Plug>(clever-f-repeat-back)",    plug)
-
 -- Jump to last edit location
 map("n", "<leader>ye", "`>zz", ns)
 map("n", "<leader>yb", "`<zz", ns)

@@ -1,3 +1,23 @@
+local function get_project_root()
+  local path = require("fzf-lua.path")
+  local current_file_dir = vim.fn.expand("%:p:h")
+  if current_file_dir == "" then
+    current_file_dir = vim.fn.getcwd()
+  end
+  local git_root = path.git_root({ cwd = current_file_dir }, true)
+  return (git_root and git_root ~= "") and git_root or vim.fn.getcwd()
+end
+
+local function fzf_exec(fn_name, default_opts)
+  return function()
+    local opts = default_opts and vim.deepcopy(default_opts) or {}
+    if not opts.cwd then
+      opts.cwd = get_project_root()
+    end
+    require("fzf-lua")[fn_name](opts)
+  end
+end
+
 return {
   {
 	"ibhagwan/fzf-lua",
@@ -9,22 +29,22 @@ return {
 	},
 	-- 仅在用到这些键位/命令时再加载，实现懒加载
 	keys = {
-	  { "<C-p>",	  function() require("fzf-lua").files() end,		desc = "FZF Files" },
+	  { "<C-p>",	  fzf_exec("files"),		desc = "FZF Files" },
 	  -- 你原来 <C-f> 走 :Rg，这里换成 fzf-lua 的项目级 grep
-	  { "<C-f>",	  function() require("fzf-lua").grep_project() end, desc = "FZF Ripgrep (project)" },
-	  { "<C-h>",	  function() require("fzf-lua").oldfiles({ cwd = "~" }) end, desc = "FZF Oldfiles ~" },
-	  { "<C-q>",	  function() require("fzf-lua").builtin() end,	  desc = "FZF Builtins" },
-	  { "<C-t>",	  function() require("fzf-lua").lines() end,		desc = "FZF Lines (open buffers)" },
+	  { "<C-f>",	  fzf_exec("grep_project"), desc = "FZF Ripgrep (project)" },
+	  { "<C-h>",	  fzf_exec("oldfiles", { cwd = "~" }), desc = "FZF Oldfiles ~" },
+	  { "<C-q>",	  fzf_exec("builtin"),	  desc = "FZF Builtins" },
+	  { "<C-t>",	  fzf_exec("lines"),		desc = "FZF Lines (open buffers)" },
 
 	  -- Leader 系：保持和你旧配置一致
-	  { "<leader>fb", function() require("fzf-lua").buffers() end,	  desc = "Buffers" },
-	  { "<leader>ff", function() require("fzf-lua").files() end,		desc = "Files" },
-	  { "<leader>fs", function() require("fzf-lua").grep_project() end, desc = "Search (ripgrep)" },
-	  { "<leader>fh", function() require("fzf-lua").oldfiles({ cwd = "~" }) end, desc = "Oldfiles ~" },
-	  { "<leader>fl", function() require("fzf-lua").lines() end,		desc = "Lines" },
+	  { "<leader>fb", fzf_exec("buffers"),	  desc = "Buffers" },
+	  { "<leader>ff", fzf_exec("files"),		desc = "Files" },
+	  { "<leader>fs", fzf_exec("grep_project"), desc = "Search (ripgrep)" },
+	  { "<leader>fh", fzf_exec("oldfiles", { cwd = "~" }), desc = "Oldfiles ~" },
+	  { "<leader>fl", fzf_exec("lines"),		desc = "Lines" },
 
 	  -- 兼容你习惯的 :Rg 命令（如果你肌肉记忆就是 :Rg）
-	  { ":Rg",  function() require("fzf-lua").grep_project() end, mode = "c", desc = "Ripgrep (project)" },
+	  { ":Rg",  fzf_exec("grep_project"), mode = "c", desc = "Ripgrep (project)" },
 	},
 	cmd = { "FzfLua" },
 
@@ -56,7 +76,7 @@ return {
 			["<S-left>"] = "preview-page-reset",
 		  },
 		  fzf = {
-			["esc"]		= "abort",
+			["Q"]		= "abort",
 			["ctrl-h"]	 = "unix-line-discard",
 			["ctrl-k"]	 = "half-page-down",
 			["ctrl-b"]	 = "half-page-up",

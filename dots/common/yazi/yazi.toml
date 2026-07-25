@@ -24,6 +24,7 @@ prepend_rules = [
 	{ url  = "*.lua",   use = "text" },
 	{ url  = "*.md",    use = "text" },
 	{ url  = "*.rs",    use = "text" },
+	{ url  = "*.sh",    use = "text" },
 	{ url  = "*.toml",  use = "text" },
 	{ mime = "text/*",  use = "text" }
 ]
