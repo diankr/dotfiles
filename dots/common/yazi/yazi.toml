@@ -18,6 +18,7 @@ prepend_rules = [
 	{ mime = "audio/*", use = "mpv_audio" },
 # edit with Nvim
 	{ url  = "*.css",   use = "text" },
+	{ url  = "*.cfg",   use = "text" },
 	{ url  = "*.gd",    use = "text" },
 	{ url  = "*.js",    use = "text" },
 	{ url  = "*.json",  use = "text" },

@@ -23,4 +23,5 @@ require("snippets.gdscript")
 
 -- run current godot scene
 require("ft_impl.gdscript.debug_run")
+require("ft_impl.gdscript.locate_file")
 

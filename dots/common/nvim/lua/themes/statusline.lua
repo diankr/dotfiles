@@ -61,7 +61,7 @@ return {
 			"rcarriga/nvim-notify",
 			opts = {
 				timeout = 5000,
-				topdown = true,
+				top_down = false, -- 改为右下角弹窗 (false 表示从下往上堆叠)
 				stages = "static",
 				render = "compact",
 				minimum_width = 60,
@@ -154,6 +154,7 @@ return {
 					end
 				end,
 			},
+			{ "<leader>nd", function() require("noice").cmd("dismiss") end, mode = "n", desc = "Dismiss All Notifications", silent = true },
 			{ "<leader>nh", function() require("noice").cmd("history") end, mode = "n", silent = true },
 			{ "<leader>nl", function() require("noice").cmd("last") end, mode = "n", silent = true },
 			{ "<leader>ne", function() require("noice").cmd("errors") end, mode = "n", silent = true },
