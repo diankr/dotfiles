@@ -7,6 +7,7 @@ require("snippets.common")
 
 -- editor
 require("editor.options")
+require("editor.filetype")
 require("editor.cursor")
 require("editor.tab")
 require("editor.window")

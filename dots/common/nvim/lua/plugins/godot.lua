@@ -1,15 +1,15 @@
 return {
 	{
 		"habamax/vim-godot",
-		ft = { "gd", "gdscript", "tscn", "scn", "tres", "gdshader" },
+		ft = { "gd", "gdscript", "tscn", "scn", "tres", "gdshader", "gsl", "glsl" },
 	},
 	{
 		"skywind3000/asyncrun.vim",
-		ft = { "gd", "gdscript", "tscn", "scn", "tres", "gdshader" },
+		ft = { "gd", "gdscript", "tscn", "scn", "tres", "gdshader", "gsl", "glsl" },
 	},
 	{
 		"teatek/gdscript-extended-lsp.nvim",
-		ft = { "gd", "gdscript", "tscn", "scn", "tres", "gdshader" },
+		ft = { "gd", "gdscript", "tscn", "scn", "tres", "gdshader", "gsl", "glsl" },
 		opts = {
 			view_type = "floating",
 			picker = "snacks",
@@ -18,7 +18,7 @@ return {
 	},
 	{
 		"folke/snacks.nvim",
-		ft = { "gd", "gdscript", "tscn", "scn", "tres", "gdshader" },
+		ft = { "gd", "gdscript", "tscn", "scn", "tres", "gdshader", "gsl", "glsl" },
 		opts = {
 			explorer = {
 				auto_open = true,

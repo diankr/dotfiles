@@ -9,8 +9,8 @@ return {
 				-- Common
 				"lua", "vim", "vimdoc", "bash", "json", "toml", "yaml",
 				"cpp", "rust",
-				-- Godot / GDScript
-				"gdscript", "godot_resource", "gdshader",
+				-- Godot / GDScript / Shader
+				"gdscript", "godot_resource", "gdshader", "glsl",
 			},
 			highlight = {
 				enable = true,
@@ -27,5 +27,18 @@ return {
 				},
 			},
 		},
+		config = function(_, opts)
+			local pcall_ok, ts_configs = pcall(require, "nvim-treesitter.configs")
+			if not pcall_ok then
+				pcall_ok, ts_configs = pcall(require, "nvim-treesitter.config")
+			end
+			if pcall_ok and ts_configs and ts_configs.setup then
+				ts_configs.setup(opts)
+			end
+			vim.treesitter.language.register("gdshader", { "gdshader", "gsl" })
+			vim.treesitter.language.register("glsl", "glsl")
+		end,
   },
 }
+
+
