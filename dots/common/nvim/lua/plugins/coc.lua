@@ -2,8 +2,6 @@ return {
 	{
 		"neoclide/coc.nvim",
 		branch = "release",
-		-- need nodejs
-		build = "npm ci",
 		-- lazy load
 		event = { "BufReadPre", "BufNewFile" },
 
@@ -64,6 +62,9 @@ return {
 			map("i", "<Right>", [[coc#pum#visible() ? coc#pum#cancel() : "\<Right>"]],   cmplOpts)
 			map("i", "<Tab>", [[coc#pum#visible() ? coc#pum#confirm() : "\<Tab>"]], cmplOpts)
 
+			-- Explorer
+			map("n", "<leader>e", "<cmd>CocCommand explorer --position floating --floating-position center<CR>", { silent = true, desc = "coc-explorer (floating center)" })
+
 			--
 			-- ==========  Highlighting & Signature  ==========
 			--
@@ -79,18 +80,5 @@ return {
 			vim.opt.completeopt = { "menuone", "noselect" }
 		end,
 	},
-	-- coc-explorer
-	{
-		"weirongxu/coc-explorer",
-		dependencies = { "neoclide/coc.nvim" },
-		keys = {
-			{
-				"<leader>e",
-				function()
-					vim.cmd("CocCommand explorer --position floating --floating-position center")
-				end,
-				desc = "coc-explorer (floating center)"
-			},
-		},
-	}
 }
+
