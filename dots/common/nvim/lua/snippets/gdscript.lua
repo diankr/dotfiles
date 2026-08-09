@@ -21,10 +21,11 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		i_map( 0, "[", "[]<Esc>i" )
 		i_map( 0, "{", "{}<Esc>i" )
 
-		i_map( 1, "l", "-> " )
+		i_map( 1, "v", " -> void" )
 		i_map( 1, "p", "print(\"\")<Esc>hi" )
 		i_map( 1, "cl", "class_name " )
 		i_map( 1, "re", "RESULT.Err." )
+		i_map( 1, "b", "breakpoint" )
 		-- constants.scene or dialog_node
 
 		-- append "," to last

@@ -2,8 +2,8 @@ lastupdatecheck: 0
 recentrepos:
     - /Users/kouteki/dotfiles
     - /Users/kouteki/Godot/iruka
-    - /Users/kouteki/CodeWork/Rust/pier
     - /Users/kouteki/.hammerspoon
+    - /Users/kouteki/CodeWork/Rust/pier
     - /Users/kouteki/CodeWork/Rust/tako
 startuppopupversion: 5
 didshowhunkstaginghint: true

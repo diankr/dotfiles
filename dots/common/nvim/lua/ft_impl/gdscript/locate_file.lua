@@ -1,4 +1,4 @@
-vim.api.nvim_create_user_command('LocateFileInGodot', function()
+local function locate_current_file_in_godot()
 	-- 获取当前缓冲区的绝对路径
 	local filepath = vim.fn.expand('%:p')
 
@@ -13,7 +13,6 @@ vim.api.nvim_create_user_command('LocateFileInGodot', function()
 	root = vim.fn.fnamemodify(root, ':p:h')
 
 	-- 将系统的绝对路径转换为 Godot 认识的 res:// 路径
-	-- 比如把 /User/game/src/main.gd 截取为 src/main.gd
 	local rel_path = filepath:sub(#root + 2)
 	local res_path = 'res://' .. rel_path
 
@@ -23,10 +22,27 @@ vim.api.nvim_create_user_command('LocateFileInGodot', function()
 		client:close()
 		if err then
 			print("发送失败: " .. err)
+		else
+			vim.schedule(function()
+				vim.fn.jobstart({
+					"osascript",
+					"-e", 'tell application "Godot" to activate'
+				}, { detach = true })
+			end)
 		end
 	end)
 	print("在Godot中定位: " .. res_path)
-end, {})
+end
 
--- 绑定你喜欢的快捷键，比如 <leader>gl
-vim.keymap.set('n', '<localleader>fs', ':LocateFileInGodot<CR>', { desc = 'Locate file in Godot FileSystem' })
+vim.api.nvim_create_user_command('LocateFileInGodot', locate_current_file_in_godot, { desc = "Locate current file in Godot FileSystem" })
+
+-- 绑定当前 GDScript Buffer 的局部快捷键
+vim.keymap.set('n', '<localleader>fs', ':LocateFileInGodot<CR>', { buffer = true, desc = 'Locate file in Godot FileSystem' })
+
+-- 为后续打开的所有 GDScript Buffer 注册局部快捷键
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "gdscript",
+	callback = function(args)
+		vim.keymap.set("n", "<localleader>fs", ":LocateFileInGodot<CR>", { buffer = args.buf, desc = "Locate file in Godot FileSystem" })
+	end,
+})

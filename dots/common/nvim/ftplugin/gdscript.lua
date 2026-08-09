@@ -21,7 +21,8 @@ end
 -- Markdown Snippets
 require("snippets.gdscript")
 
--- run current godot scene
+-- run current godot scene & gdscript utils
+require("ft_impl.gdscript.debugger")
 require("ft_impl.gdscript.debug_run")
 require("ft_impl.gdscript.locate_file")
 
