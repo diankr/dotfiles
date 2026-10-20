@@ -1,4 +1,4 @@
---- @since 25.5.28
+--- @since 25.12.29
 local function debug(...)
   local function toReadableString(val)
     if type(val) == "table" then
@@ -31,15 +31,15 @@ local set_state = ya.sync(function(state, attr, value)
   state[attr] = value
 end)
 
-local get_cwd = ya.sync(function(state)
+local get_cwd = ya.sync(function(_state)
   return tostring(cx.active.current.cwd) -- Url objects are evil >.<"
 end)
 
-local get_current_tab_idx = ya.sync(function(state)
+local get_current_tab_idx = ya.sync(function(_state)
   return cx.tabs.idx
 end)
 
-local get_tabs_as_paths = ya.sync(function(state)
+local get_tabs_as_paths = ya.sync(function(_state)
   local tabs = cx.tabs
   local active_tab_idx = tabs.idx
   local result = {}
@@ -51,9 +51,19 @@ local get_tabs_as_paths = ya.sync(function(state)
   return result
 end)
 
+local some = function(...)
+  for _, v in ipairs({ ... }) do
+    if v ~= nil then
+      return v
+    end
+  end
+end
+
 local function filename(pathstr)
   if pathstr == "/" then return pathstr end
-  local url_name = Url(pathstr):name()
+  local u = Url(pathstr)
+  -- In Yazi 25.4+, Url.name is a property (string), not a method
+  local url_name = type(u.name) == "function" and u:name() or u.name
   if url_name then
     return tostring(url_name)
   else
@@ -102,9 +112,9 @@ local create_special_hops = function(config)
     table.insert(hops, { key = "<Enter>", desc = "Create hop", path = "__MARK__" })
   end
   table.insert(hops, { key = "<Space>", desc = "Fuzzy search", path = "__FUZZY__" })
-  local tabhist = get_state("tabhist")
+  local tabhist = get_state("tabhist") or {}
   local tab = get_current_tab_idx()
-  if tabhist[tab] and tabhist[tab][2] then
+  if tab and tabhist[tab] and tabhist[tab][2] then
     local previous_dir = tabhist[tab][2]
     table.insert(hops, {
       key = "<Backspace>",
@@ -169,12 +179,13 @@ local function validate_options(options)
       elseif hop.desc and (type(hop.desc) ~= "string" or string.len(hop.path) == 0) then
         return err .. 'desc must be non-empty string'
       end
-      -- Check for duplicate keys
-      if used_keys[hop.key] then
-        return err .. 'needs unique key'
+      -- Check for duplicate keys (only for simple string keys)
+      if type(hop.key) == "string" then
+        if used_keys[hop.key] then
+          return err .. 'needs unique key'
+        end
+        used_keys[hop.key] = true
       end
-      -- Insert hop keys as table keys to easily check for set membership
-      used_keys[hop.key] = true
     end
   else
     return 'Invalid "hops" config value'
@@ -182,9 +193,9 @@ local function validate_options(options)
   -- Validate other options
   if desc_strategy ~= nil and desc_strategy ~= "path" and desc_strategy ~= "filename" then
     return 'Invalid "desc_strategy" config value'
-  elseif tabs ~= nil and type(notify) ~= "boolean" then
+  elseif tabs ~= nil and type(tabs) ~= "boolean" then
     return 'Invalid "tabs" config value'
-  elseif ephemeral ~= nil and type(notify) ~= "boolean" then
+  elseif ephemeral ~= nil and type(ephemeral) ~= "boolean" then
     return 'Invalid "ephemeral" config value'
   elseif fuzzy_cmd ~= nil and type(fuzzy_cmd) ~= "string" then
     return 'Invalid "fuzzy_cmd" config value'
@@ -194,14 +205,14 @@ local function validate_options(options)
 end
 
 -- https://github.com/sxyazi/yazi/blob/main/yazi-plugin/preset/plugins/fzf.lua
--- https://github.com/sxyazi/yazi/blob/main/yazi-plugin/src/process/child.rs
 -- Returns nil if fzf command failed or user exited with escape key
 local select_fuzzy = function(hops, config)
-  local permit = ya.hide()
+  local hide_fn = ui.hide or ya.hide
+  local permit = hide_fn()
   local child, spawn_err =
       Command(config.fuzzy_cmd):stdin(Command.PIPED):stdout(Command.PIPED):stderr(Command.INHERIT):spawn()
   if not child then
-    fail("Command `%s` failed with code %s. Do you have it installed?", config.fuzzy_cmd, spawn_err.code)
+    fail("Command `%s` failed with code %s. Do you have it installed?", config.fuzzy_cmd, spawn_err and spawn_err.code or "unknown")
     return
   end
   local fuzzy_entries = {}
@@ -226,9 +237,11 @@ local select_fuzzy = function(hops, config)
   child:flush()
   local output, output_err = child:wait_with_output()
   permit:drop()
-  if not output.status.success then
-    if output.status.code ~= 130 then -- user pressed escape to quit
-      fail("Command `%s` failed with code %s", config.fuzzy_cmd, output_err.code)
+  if not output or not output.status.success then
+    if output and output.status.code ~= 130 then -- user pressed escape to quit
+      fail("Command `%s` failed with code %s", config.fuzzy_cmd, output.status.code)
+    elseif not output and output_err then
+      fail("Command `%s` failed", config.fuzzy_cmd)
     end
     return
   end
@@ -245,13 +258,8 @@ local select_fuzzy = function(hops, config)
 end
 
 local cd = function(selected_hop, config)
-  local _, dir_list_err = fs.read_dir(Url(selected_hop.path), { limit = 1, resolve = true })
-  if dir_list_err then
-    fail("Invalid directory " .. path_to_desc(selected_hop.path))
-    return
-  end
-  -- Assuming that if I can fs.read_dir, then this will also succeed
-  ya.emit("cd", { selected_hop.path })
+  -- Perform cd with raw = true to ensure exact path resolution (spaces, special characters, unicode)
+  ya.emit("cd", { selected_hop.path, raw = true })
   if config.notify then
     info('Hopped to ' .. selected_hop.desc)
   end
@@ -272,7 +280,7 @@ local attempt_hop = function(hops, config)
   if selected_hop.path == "__MARK__" then
     local mark_cands = {};
     -- Ideally any unicode character would be supported, but yazi.which
-    -- requies a concrete list of candidates
+    -- requires a concrete list of candidates
     local candidate_chars = {
       'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
       'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F',
@@ -313,10 +321,10 @@ local function init()
   local desc_strategy = options.desc_strategy or "path"
   set_state("config", {
     desc_strategy = desc_strategy,
-    fuzzy_cmd = options.fuzzy_cmd or "fzf",
-    notify = options.notify or false,
-    ephemeral = options.ephemeral or true,
-    tabs = options.tabs or true,
+    fuzzy_cmd = some(options.fuzzy_cmd, "fzf"),
+    notify = some(options.notify, false),
+    ephemeral = some(options.ephemeral, true),
+    tabs = some(options.tabs, true),
   })
   -- Set hops after ensuring they all have a description
   local hops = {}
@@ -336,26 +344,19 @@ return {
   setup = function(state, options)
     state.options = options
     ps.sub("cd", function(body)
-      -- Note: This callback is sync and triggered at startup!
+      if not body or not body.tab then return end
       local tab = body.tab -- type number
-      -- Very important to turn this into a string because Url has ownership issues
-      -- when passed to standard utility functions >.<'
-      -- https://github.com/sxyazi/yazi/issues/2159
       local cwd = tostring(cx.active.current.cwd)
-      -- Upon startup this will be nil so initialize if necessary
       local tabhist = state.tabhist or {}
-      -- tabhist structure:{ <tab_index> = { <current_dir>, <previous_dir?> }, ... }
       if not tabhist[tab] then
-        -- If fresh tab, initialize tab history table
         tabhist[tab] = { cwd }
       else
-        -- Otherwise, shift history table to the right and add cwd to the front
         tabhist[tab] = { cwd, tabhist[tab][1] }
       end
       state.tabhist = tabhist
     end)
   end,
-  entry = function(self, job)
+  entry = function(_self, job)
     if not get_state("init") then
       init()
     end

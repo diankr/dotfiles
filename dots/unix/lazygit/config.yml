@@ -33,59 +33,54 @@ gui:
       - '#E45842'
     defaultFgColor:
       - '#B6AB8F'
-
-  branchColorPatterns:
-    '^DEV':      '#B7B947'
-    'main':      '#B7B947'
-    'develop':   '#B7B947'
-    '^feature/': '#B6AB8F'
-
+    authorColors:
+      # 'DehKaine': '#B7B947'
+      'DehKaine': '#83A598'
+      '*': '#B7B947'
+    branchColorPatterns:
+      '^DEV': '#B7B947'
+      'main': '#B7B947'
+      'develop': '#B7B947'
+      '^feature/': '#B6AB8F'
   customIcons:
     filenames:
-      ".githook":   {icon: "󰊢", color: "#A074B3"}
+      ".githook": {icon: "\U000F02A2", color: "#A074B3"}
       # ".githook":   {icon: "󰊢", color: "#E45842"}
       # "config.yml": {icon: "󰒓", color: "#EA863A"}
       # "config.yml": {icon: "󰒓", color: "#A074B3"}
     extensions:
-      ".aac":    {icon: "", color: "#B8BB26"}
-      ".bat":    {icon: "󰖳", color: "#B6AB8F"}
-      ".bin":    {icon: "", color: "#B6AB8F"}
-      ".c":      {icon: "", color: "#89A398"}
-      ".css":    {icon: "", color: "#B6AB8F"}
-      ".csv":    {icon: "󰓫", color: "#8EC07C"}
-      ".cpp":    {icon: "", color: "#89A398"}
-      ".html":   {icon: "", color: "#FE8019"}
+      ".aac": {icon: "", color: "#B8BB26"}
+      ".bat": {icon: "\U000F05B3", color: "#B6AB8F"}
+      ".bin": {icon: "", color: "#B6AB8F"}
+      ".c": {icon: "", color: "#89A398"}
+      ".css": {icon: "", color: "#B6AB8F"}
+      ".csv": {icon: "\U000F04EB", color: "#8EC07C"}
+      ".cpp": {icon: "", color: "#89A398"}
+      ".html": {icon: "", color: "#FE8019"}
       ".import": {icon: "", color: "#B6AB8F"}
-      ".js":     {icon: "", color: "#EDBD50"}
-      ".jsx":    {icon: "", color: "#EDBD50"}
-      ".json":   {icon: "", color: "#B8BB26"}
-      ".jpg":    {icon: "", color: "#B8BB26"}
-      ".jpeg":   {icon: "", color: "#B8BB26"}
-      ".lua":    {icon: "󰽥", color: "#C37D90"}
-      ".md":     {icon: "", color: "#FE8019"}
-      ".meta":   {icon: "", color: "#B6AB8F"}
-      ".mp3":    {icon: "", color: "#B8BB26"}
-      ".rs":     {icon: "", color: "#FE8019"}
-      ".sh":     {icon: "", color: "#EDBD50"}
-      ".toml":   {icon: "", color: "#A074B3"}
-      ".ttf":    {icon: "", color: "#A074B3"}
-      ".png":    {icon: "", color: "#B8BB26"}
-      ".py":     {icon: "", color: "#B8BB26"}
-      ".wav":    {icon: "", color: "#B8BB26"}
-      ".webp":   {icon: "", color: "#B8BB26"}
-      ".xml":    {icon: "󰗀", color: "#B6AB8F"}
-      ".yml":    {icon: "", color: "#A074B3"}
-      ".yaml":   {icon: "", color: "#A074B3"}
-
-  authorColors:
-    # 'DehKaine': '#B7B947'
-    'DehKaine': '#83A598'
-    '*': '#B7B947'
-
+      ".js": {icon: "", color: "#EDBD50"}
+      ".jsx": {icon: "", color: "#EDBD50"}
+      ".json": {icon: "", color: "#B8BB26"}
+      ".jpg": {icon: "", color: "#B8BB26"}
+      ".jpeg": {icon: "", color: "#B8BB26"}
+      ".lua": {icon: "\U000F0F65", color: "#C37D90"}
+      ".md": {icon: "", color: "#FE8019"}
+      ".meta": {icon: "", color: "#B6AB8F"}
+      ".mp3": {icon: "", color: "#B8BB26"}
+      ".rs": {icon: "", color: "#FE8019"}
+      ".sh": {icon: "", color: "#EDBD50"}
+      ".toml": {icon: "", color: "#A074B3"}
+      ".ttf": {icon: "", color: "#A074B3"}
+      ".png": {icon: "", color: "#B8BB26"}
+      ".py": {icon: "", color: "#B8BB26"}
+      ".wav": {icon: "", color: "#B8BB26"}
+      ".webp": {icon: "", color: "#B8BB26"}
+      ".xml": {icon: "\U000F05C0", color: "#B6AB8F"}
+      ".yml": {icon: "", color: "#A074B3"}
+      ".yaml": {icon: "", color: "#A074B3"}
 git:
   commit:
     autoWrapCommitMessage: true
-
 keybinding:
   universal:
     return: <esc>
@@ -93,33 +88,27 @@ keybinding:
     nextTab: 'L'
     nextScreenMode: '*'
     prevScreenMode: '#'
-
     prevBlock: 'K'
     nextBlock: 'J'
     prevBlock-alt: ''
     nextBlock-alt: ''
     prevBlock-alt2: ''
     nextBlock-alt2: ''
-
     scrollLeft: '<'
     scrollRight: '>'
     scrollUpMain-alt2: ''
     scrollDownMain-alt2: ''
     gotoTop: '^'
     gotoBottom: '$'
-
     goInto: 'l'
     # select: 'w'
     focusMainView: <tab>
     filteringMenu: <c-f>
-
     diffingMenu: <c-d>
     diffingMenu-alt: ''
-
   files:
     findBaseCommitForFixup: ''
     commitChangesWithoutHook: ''
     expandAll: '+'
-
   commits:
     openLogMenu: <c-s>

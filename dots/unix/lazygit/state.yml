@@ -6,8 +6,6 @@ recentrepos:
     - /Users/kouteki/CodeWork/Rust/pier
     - /Users/kouteki/CodeWork/Rust/tako
 startuppopupversion: 5
-didshowhunkstaginghint: true
-lastversion: 0.61.1
+lastversion: 0.66.2
 customcommandshistory: []
 hidecommandlog: false
-githubPullRequests: {}
